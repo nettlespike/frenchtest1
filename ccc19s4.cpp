@@ -24,13 +24,17 @@ int main() {
     }
     
     if(2*K>=N){ //subtask 1
+        if(K==N){
+            ans = rmq(1, N);
+            return 0;
+        }
         for(int i = N-K; i <= K; i++)
             ans = max(ans, rmq(1, i) + rmq(i+1, N));
         
     }
     else{ //subtask 2
         for(int i = 1; i <= N; i++){
-            for(int j = max(0, i-K); j <= ((i+K-1)/K-1)*K; j++) //ciel
+            for(int j = max(0, i-K); j <= max(i-1,(i+K-1)/K-1)*K; j++) //ciel
                 dp[i] = max(dp[i], dp[j] + rmq(j+1, i));
         }
         ans = dp[N];
